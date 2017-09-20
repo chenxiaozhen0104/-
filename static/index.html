@@ -1,0 +1,530 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>浙灵智安小区系统</title>
+</head>
+<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	html, body, #container {
+		height: 100%;
+		width: 100%;
+	}
+
+	.header {
+		height: 80px;
+		width: 100%;
+		background: url(banner.png) no-repeat;
+		background-size: 100% 100%;
+		position: relative;
+	}
+
+	.header-title {
+		position: absolute;
+		right: 0px;
+		width: 300px;
+		height: 80px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		font-size: 16px;
+	}
+
+	.header-title span {
+		padding: 3px 0px;
+	}
+
+	.header-href {
+		margin-top: 4px;
+		text-decoration: none;
+		color: #fff;
+		padding: 5px 14px;
+		background-color: #fff;
+		color: #237bff;
+		border-radius: 5px;
+	}
+
+	.content {
+		width: 1880px;
+		height: auto;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding-bottom: 5px;
+	}
+
+	.content-item {
+		width: 925px;
+		height: auto;
+	}
+
+	.content-item ul {
+		list-style: none;
+	}
+
+	.contentItem-header {
+		height: 65px;
+		background-color: #fff;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.contentItem-header li:first-child {
+		color: #237bff;
+	}
+
+	.contentItem-header b {
+		margin-right: 10px;
+	}
+
+	.contentItem-header span {
+		margin-left: 25px;
+	}
+
+	.contentItem-cont {
+		width: 100%;
+		border: 1px solid #61a0ff;
+		border-bottom: none;
+	}
+
+	.contentItem-contList {
+		height: auto;
+		border-bottom: 1px solid #61a0ff;
+	}
+
+	.list-title {
+		height: 35px;
+		width: 180px;
+		line-height: 35px;
+		background-color: #237bff;
+		color: #fff;
+		padding-left: 25px;
+		border-bottom-right-radius: 300px;
+		position: relative;
+	}
+
+	.list-title:before {
+		content: "";
+		height: 8px;
+		width: 8px;
+		background-color: #fff;
+		border-radius: 100%;
+		z-index: 10;
+		position: absolute;
+		top: 14px;
+		left: 10px;
+	}
+
+	.list-title span {
+		font-size: 12px;
+		margin-left: 8px;
+	}
+
+	.list-cont {
+		padding: 10px;
+		width: 910px;
+		height: 245px;
+		display: flex;
+		overflow-x: scroll;
+		flex-direction: row;
+		overflow-y: hidden;
+	}
+
+	.list-item {
+		width: 215px;
+	}
+
+	.list-cont .list-item {
+		margin-right: 13px;
+	}
+
+	#container  .list-cont  .listActives {
+		background-color:red;
+		color: #fff;
+	}
+
+	.list-img {
+		width: 215px;
+		height: 130px;
+		display: inline-block;
+	}
+
+	.list-item p {
+		font-size: 12px;
+		padding: 5px 0;
+	}
+
+	.list-item span {
+		color: #4d9841;
+	}
+
+	.mask-message {
+		width: 420px;
+		height: 360px;
+		background-color: #fff;
+		border-radius: 5px;
+		border: 1px solid #dedede;
+		display: flex;
+		flex-direction: column;
+		padding: 20px;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: scale(1) rotate(0);
+		margin-left: -210px;
+		margin-top: -180px;
+		transition:all 2s;
+	}
+
+	.mask-message p {
+		padding: 2px 0;
+	}
+
+	.list-imgs {
+		height: 250px;
+		width: 380px;
+	}
+
+
+	.inFacePosition {
+		top: 20%;
+		left: 30px;
+		transform: scale(0) rotate(-360deg);
+	}
+
+	.inCarPosition {
+		top: 40%;
+		left: 20px;
+		transform: scale(0) rotate(-360deg);
+	}
+
+	.inPosition {
+		top: 78%;
+		left: 30px;
+		transform: scale(0) rotate(-360deg);
+	}
+
+	.outFacePosition {
+		top: -1%;
+		margin-left: 720px;
+		margin-top: 0px;
+		transform: scale(0) rotate(360deg);
+	}
+
+	.outCarPosition {
+		top: 40%;
+		right: 40px;
+		transform: scale(0) rotate(360deg);
+	}
+
+	.outPosition {
+		top: 60%;
+		margin-left: 720px;
+		margin-top: 0px;
+		transform: scale(0) rotate(360deg);
+	}
+</style>
+<body>
+	<div id="container">
+		<div class="header">
+			<div class="header-title">
+				<span>{{nowTime}}</span>
+				<span>{{week}}</span>
+				<!--<a class="header-href" href="/User/Index">用户设置</a>-->
+			</div>
+		</div>
+		<div class="content">
+			<div class="content-item">
+				<ul class="contentItem-header">
+					<li><b>进门记录</b><i>Enter the record</i></li>
+					<li>
+						<span>今日进门统计 :&nbsp; 人员:{{infacenum}} 人</span><span>车辆:{{incarnum}} 辆</span><span>电瓶车:{{inBatteryNum}} 辆</span>
+					</li>
+				</ul>
+				<div class="contentItem-cont">
+					<div class="contentItem-contList">
+						<p class="list-title">人员<span>进门记录</span></p>
+						<ul class="list-cont">
+							<li class="list-item" v-for="data in inFaceData" v-bind:class="[ data.result ? '':'listActives']">
+								<img class="list-img" :src="data.computeImageSrc">
+								<p>{{data.userType}}</p>
+								<p>{{"时间:"}}&nbsp;&nbsp;{{data.dateTime}}</p>
+								<p>状态: &nbsp;<span :style="{'color':data.result?'#4d9841':'blue'}">{{data.result?"通过":"不通过"}}</span></p>
+							</li>
+						</ul>
+					</div>
+					<div class="contentItem-contList">
+						<p class="list-title">车辆<span>进门记录</span></p>
+						<ul class="list-cont">
+							<li class="list-item" v-for="carItem in inCarData">
+								<img class="list-img" :src="carItem.scenePlateSrc[0]">
+								<p>{{carItem.number}}</p>
+								<p>{{"时间:"}}&nbsp;&nbsp;{{carItem.dateTime}}</p>
+								<p>状态: &nbsp;<span :style="{'color':carItem.result?'#4d9841':'red'}">{{carItem.result?"有效车牌":"无效车牌"}}</span></p>
+							</li>
+						</ul>
+					</div>
+					<div class="contentItem-contList">
+						<p class="list-title">电瓶车<span>进门记录</span></p>
+						<ul class="list-cont">
+							<li class="list-item"  v-for="item in inBatteryCar">
+								<img class="list-img" :src="item.electricSrc">
+								<p>{{item.bikeCardNumber}}</p>
+								<p>{{"时间:"}}&nbsp;&nbsp;{{item.dataTime}}</p>
+								<p>状态: &nbsp;<span :style="{'color':item.result?'#4d9841':'red'}">{{item.result?"通过":"不通过"}}</span></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="content-item">
+				<div class="content-item">
+					<ul class="contentItem-header">
+						<li><b>出门记录</b><em>Out the record</em></li>
+						<li>
+							<span>今日出门统计 :&nbsp; 人员:{{outfacenum}} 人</span><span>车辆:{{outcarnum}} 辆</span><span>电瓶车:{{outBatteryNum}} 辆</span>
+						</li>
+					</ul>
+					<div class="contentItem-cont">
+						<div class="contentItem-contList">
+							<p class="list-title">人员<span>出门记录</span></p>
+							<ul class="list-cont">
+								<li class="list-item" v-for="data in outFaceData"  v-bind:class="[ data.result ? '':'listActives']">
+									<img class="list-img" :src="data.computeImageSrc">
+									<p>{{data.userType}}</p>
+									<p>{{"时间:"}}&nbsp;&nbsp;{{data.dateTime}}</p>
+									<p>状态: &nbsp;<span :style="{'color':data.result?'#4d9841':'blue'}">{{data.result?"通过":"不通过"}}</span></p>
+								</li>
+							</ul>
+						</div>
+						<div class="contentItem-contList">
+							<p class="list-title">车辆<span>出门记录</span></p>
+							<ul class="list-cont">
+								<li class="list-item" v-for="carItem in outCarData">
+									<img class="list-img" :src="carItem.scenePlateSrc[0]">
+									<p>{{carItem.number}}</p>
+									<p>{{"时间:"}}&nbsp;&nbsp;{{carItem.dateTime}}</p>
+									<p>状态: &nbsp;<span :style="{'color':carItem.result?'#4d9841':'red'}">{{carItem.result?"有效车牌":"无效车牌"}}</span></p>
+								</li>
+							</ul>
+						</div>
+						<div class="contentItem-contList">
+							<p class="list-title">电瓶车<span>出门记录</span></p>
+							<ul class="list-cont">
+								<li class="list-item" v-for="items in outBatteryCar">
+									<img class="list-img" :src="items.electricSrc">
+									<p>{{items.bikeCardNumber}}</p>
+									<p>{{"时间:"}}&nbsp;&nbsp;{{items.dataTime}}</p>
+									<p>状态: &nbsp;<span :style="{'color':items.result?'#4d9841':'red'}">{{items.result?"通过":"不通过"}}</span></p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="vue.min.js"></script>
+
+<script type="text/javascript">
+	new Vue({
+		el: "#container",
+		data: {
+			nowTime: '',
+			week: '星期' + '日一二三四五六'.charAt(new Date().getDay()),
+			inFaceData: JSON.parse(localStorage.getItem("inObj")) ? JSON.parse(localStorage.getItem("inObj")):[] ,
+			outFaceData: JSON.parse(localStorage.getItem("outObj")) ? JSON.parse(localStorage.getItem("outObj")) : [],
+			inCarData: [
+			{ number: '58874', scenePlateSrc: ['bigCar1.png'], dateTime: '2017-9-20 14:20:25', result:true},
+			{ number: '45614', scenePlateSrc: ['bigCar2.png'], dateTime: '2017-9-20 11:20:25', result: true},
+			{ number: '38615', scenePlateSrc: ['bigCar3.png'], dateTime: '2017-9-20 8:29:25', result: true },
+			{ number: '25785', scenePlateSrc: ['bigCar4.png'], dateTime: '2017-9-20 7:56:25', result: true }],
+			outCarData: [
+			{ number: '58874', scenePlateSrc: ['bigCar1.png'], dateTime: '2017-9-20 14:20:25', result: true },
+			{ number: '45614', scenePlateSrc: ['bigCar2.png'], dateTime: '2017-9-20 11:20:25', result: true },
+			{ number: '38615', scenePlateSrc: ['bigCar3.png'], dateTime: '2017-9-20 8:29:25', result: true },
+			{ number: '25785', scenePlateSrc: ['bigCar4.png'], dateTime: '2017-9-20 7:56:25', result: true }],
+			inBatteryCar: [
+			{ bikeCardNumber: '382224', electricSrc: 'car1.jpg', result: true, dataTime: '2017-20-18 8:15:25' },
+			{ bikeCardNumber: '571524', electricSrc: 'car2.jpg', result: true, dataTime: '2017-9-20 9:20:02' },
+			{ bikeCardNumber: '161524', electricSrc: 'car4.png', result: true, dataTime: '2017-9-20 12:13:25' },
+			{ bikeCardNumber: '261524', electricSrc: 'car3.jpg', result: true, dataTime: '2017-9-20 10:23:25' }],
+			outBatteryCar: [
+			{ bikeCardNumber: '571524', electricSrc: 'car2.jpg', result: true, dataTime: '2017-20-18 9:10:22' },
+			{ bikeCardNumber: '261524', electricSrc: 'car3.jpg', result: true, dataTime: '2017-9-20 10:13:25' },
+			{ bikeCardNumber: '161524', electricSrc: 'car4.png', result: true, dataTime: '2017-9-20 13:13:25' },
+			{ bikeCardNumber: '382224', electricSrc: 'car1.jpg', result: true, dataTime: '2017-9-20 10:45:05' }],
+
+			status: '',
+			incarnum:4,
+			infacenum:JSON.parse(localStorage.getItem("inObj"))[0]&&JSON.parse(localStorage.getItem("inObj"))[0].count?JSON.parse(localStorage.getItem("inObj"))[0].count:0,
+			outcarnum:4,
+			outfacenum:JSON.parse(localStorage.getItem("outObj"))[0]&&JSON.parse(localStorage.getItem("outObj"))[0].count?JSON.parse(localStorage.getItem("outObj"))[0].count:0,
+			inBatteryNum:4,
+			outBatteryNum:4
+		},
+		methods: {
+			dateFormat(time, fmt) {
+				var o = {
+					'M+': time.getMonth() + 1,
+					'd+': time.getDate(),
+					'h+': time.getHours(),
+					'm+': time.getMinutes(),
+					's+': time.getSeconds(),
+					'q+': Math.floor((time.getMonth() + 3) / 3),
+					'S': time.getMilliseconds()
+				}
+				if (/(y+)/.test(fmt)) {
+					fmt = fmt.replace(RegExp.$1, (time.getFullYear() + '').substr(4 - RegExp.$1.length))
+				}
+				for (var k in o) {
+					if (new RegExp('(' + k + ')').test(fmt)) {
+						fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+					}
+				}
+				return fmt
+			},
+			datetime(str, format) {
+				var time = new Date(str)
+				return this.dateFormat(time, format || 'yyyy-MM-dd  hh:mm:ss')
+			},
+			setTime() {
+				var self = this;
+				setInterval(function () {
+					self.nowTime = new Date()
+					self.nowTime = self.datetime(self.nowTime)
+				}, 1000)
+			},
+			addElement(data,className,typeNum,dataType){
+				var _this = this
+
+				var status = data.result ? "通过" : "不通过"
+				
+				var imgUrl = (data.mType == 0 ? data.computeImageSrc : data.electricSrc)
+				var nameOrNum = (data.mType == 0 ? data.userType : data.bikeCardNumber)
+
+				_this[typeNum] = data.count
+
+				var ele = $('<div class="mask-message">\
+					<img class="list-imgs" src = "'+ imgUrl + '" >\
+					<p>'+ nameOrNum+ '</p>\
+					<p>时间&nbsp;&nbsp;'+ data.dateTime + '</p>\
+					<p>状态: &nbsp;<span style="color:'+(data.result?"":"red")+'">'+ status + '</span></p>\
+				</div >');
+				ele.appendTo("body")
+				setTimeout(function () {
+					ele.addClass(className)
+				},2000)
+
+				if (_this[dataType].length > 15) {
+					_this[dataType].length = 15;
+				}
+
+				setTimeout(function () {
+					console.log('执行了')
+
+					_this[dataType].unshift(data)
+
+					console.log(_this[dataType])
+					ele.remove();
+				}, 4000)
+
+			}
+		},
+		created() {
+			var self = this;
+			self.setTime()
+
+			var carWebsocket = new WebSocket("ws://192.168.1.75:6080/SocketServer")
+
+			carWebsocket.onopen = () => {
+				console.info('webSocket链接成功!')
+			}
+			carWebsocket.onmessage = (result) => {
+
+				var data = JSON.parse(result.data);
+
+				if (data.aType == 0) {
+					if (data.mType == 0) {
+
+						self.addElement(data,"inFacePosition","infacenum","inFaceData")
+
+					}
+					if (data.mType == 1) {
+						if (self.inCarData.length > 15) {
+							self.inCarData.length = 15;
+						}
+						self.incarnum = data.count
+						self.inCarData.unshift(data)
+					}
+					if (data.mType == 2) {
+
+						self.addElement(data,"inPosition","inBatteryNum","inBatteryCar")
+
+					}
+
+				} else {
+					if (data.mType == 0) {
+
+						self.addElement(data,"outFacePosition","outfacenum","outFaceData")
+
+					}
+
+					if (data.mType == 1) {
+						if (self.outCarData.length > 15) {
+							self.outCarData.length = 15;
+						}
+						self.outcarnum =data.count
+						self.outCarData.unshift(data)
+					}
+
+					if (data.mType == 2) {
+
+						self.addElement(data,"outPosition","outBatteryNum","outBatteryCar")
+					}
+				}
+
+				console.log('webSocket接受到信息')
+
+			}
+			carWebsocket.onerror = (error) => {
+				console.error('webSocket错误：', error)
+			}
+			carWebsocket.onclose = () => {
+				console.log('webSocket 已关闭')
+
+				var inObj = self.inFaceData
+				var outObj = self.outFaceData
+
+				localStorage.setItem("inObj", JSON.stringify(inObj))
+				localStorage.setItem("outObj",JSON.stringify(outObj))
+
+				setTimeout(function () {
+					location.reload()
+				}, 2000)
+			}
+
+
+
+		}
+	})
+
+
+</script>
